@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from '@emotion/react';
+import { theme } from './theme';
+import HomePage from './pages/HomePage';
+import ProductListPage from './pages/ProductListPage';
+import ProductDetailPage from './pages/ProductDetailPage';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<ThemeProvider theme={theme}>
+			<Router>
+				<Routes>
+					<Route path="/" element={<HomePage />} />
+					<Route path="/products" element={<ProductListPage />} />
+					{/* Dynamic segments cannot be partial in v6 react-router-dom (https://reactrouter.com/en/main/route/route#dynamic-segments)*/}
+					<Route
+						path="/product/:productId"
+						element={<ProductDetailPage />}
+					/>
+				</Routes>
+			</Router>
+		</ThemeProvider>
+	);
 }
 
 export default App;
